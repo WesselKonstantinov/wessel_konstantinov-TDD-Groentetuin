@@ -22,6 +22,16 @@ const getRevenueForCrop = input => getYieldForCrop(input) * input.crop.salePrice
 // A function to calculate the profit for a crop
 const getProfitForCrop = input => getRevenueForCrop(input) - getCostsForCrop(input);
 
+// A function to calculate the total profit
+const getTotalProfit = ({ crops }) => {
+    let totalProfit = 0;
+    crops.forEach(crop => {
+        let cropProfit = getProfitForCrop(crop);
+        totalProfit += cropProfit;
+    });
+    return totalProfit;
+};
+
 module.exports = {
     getYieldForPlant,
     getYieldForCrop,
@@ -29,4 +39,5 @@ module.exports = {
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
+    getTotalProfit,
 };

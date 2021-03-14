@@ -5,6 +5,7 @@ const {
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
+    getTotalProfit,
 } = require('./farm');
 
 // Initial tests for getYieldForPlant, getYieldForCrop and getTotalYield
@@ -71,7 +72,6 @@ describe('getCostsForCrop', () => {
             crop: corn,
             numCrops: 10,
         };
-
         expect(getCostsForCrop(input)).toBe(10);
     });
 });
@@ -106,5 +106,28 @@ describe('getProfitForCrop', () => {
             numCrops: 10,
         };
         expect(getProfitForCrop(input)).toBe(180);
+    });
+});
+
+// Testing the getTotalProfit function
+describe('getTotalProfit', () => {
+    test('Calculate total profit with multiple crops', () => {
+        const corn = {
+            name: 'corn',
+            salePrice: 4,
+            cost: 2,
+            yield: 6,
+        };
+        const pumpkin = {
+            name: 'pumpkin',
+            salePrice: 5,
+            cost: 3,
+            yield: 4,
+        };
+        const crops = [
+            { crop: corn, numCrops: 5 },
+            { crop: pumpkin, numCrops: 3 },
+        ];
+        expect(getTotalProfit({ crops })).toBe(161);
     });
 });
