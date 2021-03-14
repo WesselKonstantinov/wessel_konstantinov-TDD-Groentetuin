@@ -4,6 +4,7 @@ const {
     getTotalYield,
     getCostsForCrop,
     getRevenueForCrop,
+    getProfitForCrop,
 } = require('./farm');
 
 // Initial tests for getYieldForPlant, getYieldForCrop and getTotalYield
@@ -88,5 +89,22 @@ describe('getRevenueForCrop', () => {
             numCrops: 10,
         };
         expect(getRevenueForCrop(input)).toBe(60);
+    });
+});
+
+// Testing the getProfitForCrop function
+describe('getProfitForCrop', () => {
+    test('Calculate the profit for a crop', () => {
+        const corn = {
+            name: 'corn',
+            salePrice: 4,
+            cost: 2,
+            yield: 5,
+        };
+        const input = {
+            crop: corn,
+            numCrops: 10,
+        };
+        expect(getProfitForCrop(input)).toBe(180);
     });
 });
