@@ -11,8 +11,8 @@ const getYieldForPlant = (plant, environmentFactors = {}) => {
     return plant.yield * (percentage / 100);
 };
 
-// A function to calculate the yield for a crop
-const getYieldForCrop = input => getYieldForPlant(input.crop) * input.numCrops;
+// A function to calculate the yield for a crop depending on environment factors
+const getYieldForCrop = (input, environmentFactors) => getYieldForPlant(input.crop, environmentFactors) * input.numCrops;
 
 // A function to calculate the total yield 
 const getTotalYield = ({ crops }) => crops.map(crop => getYieldForCrop(crop)).reduce((total, current) => total + current);
