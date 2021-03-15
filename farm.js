@@ -3,7 +3,7 @@
     the yield for a crop and the total yield
 */
 const getYieldForPlant = plant => plant.yield;
-const getYieldForCrop = input => input.crop.yield * input.numCrops;
+const getYieldForCrop = input => getYieldForPlant(input.crop) * input.numCrops;
 const getTotalYield = ({ crops }) => {
     let totalYield = 0;
     crops.forEach(crop => {
