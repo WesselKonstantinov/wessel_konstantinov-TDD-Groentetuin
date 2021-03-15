@@ -192,3 +192,78 @@ describe('getYieldForPlant with environment factors', () => {
         expect(getYieldForPlant(corn, environmentFactors)).toBe(18);
     });
 });
+
+// Testing the getYieldForCrop function with environment factors
+describe('getYieldForCrop with environment factors', () => {
+    const pumpkin = {
+        name: 'pumpkin',
+        yield: 20,
+        factors: {
+            sun: {
+                low: -20,
+                medium: 0,
+                high: 30,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -50,
+            },
+        },
+    };
+
+    const input = {
+        crop: pumpkin,
+        numCrops: 10,
+    };
+
+    test('Get yield for a crop with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(260);
+    });
+
+    test('Get yield for a crop with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(160);
+    });
+
+    test('Get yield for a crop with medium wind factor', () => {
+        const environmentFactors = {
+            wind: 'medium',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(140);
+    });
+
+    test('Get yield for a crop with high wind factor', () => {
+        const environmentFactors = {
+            wind: 'high',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(100);
+    });
+
+    test('Get yield for a crop with low sun and high wind factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+            wind: 'high',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(80);
+    });
+
+    test('Get yield for a crop with high sun and low wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'low',
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(260);
+    });
+});
