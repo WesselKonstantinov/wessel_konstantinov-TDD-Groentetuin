@@ -435,3 +435,80 @@ describe('getRevenueForCrop with environment factors', () => {
         expect(getRevenueForCrop(input, environmentFactors)).toBe(63);
     });
 });
+
+// Testing the getProfitForCrop function with environment factors
+describe('getProfitForCrop with environment factors', () => {
+    const corn = {
+        name: 'corn',
+        salePrice: 2,
+        cost: 1,
+        yield: 3,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+            },
+        },
+    };
+
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
+
+    test('Calculate the profit for a crop with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(80);
+    });
+
+    test('Calculate the profit for a crop with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(20);
+    });
+
+    test('Calculate the profit for a crop with medium wind factor', () => {
+        const environmentFactors = {
+            wind: 'medium',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(32);
+    });
+
+    test('Calculate the profit for a crop with high wind factor', () => {
+        const environmentFactors = {
+            wind: 'high',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(14);
+    });
+
+    test('Calculate the profit for a crop with high sun and medium wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'medium',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(53);
+    });
+
+    test('Calculate the profit for a crop with low sun and high wind factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+            wind: 'high',
+        };
+
+        expect(getProfitForCrop(input, environmentFactors)).toBe(2);
+    });
+});
