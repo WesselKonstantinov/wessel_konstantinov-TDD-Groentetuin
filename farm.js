@@ -27,7 +27,7 @@ const getRevenueForCrop = (input, environmentFactors) => getYieldForCrop(input, 
 const getProfitForCrop = (input, environmentFactors) => getRevenueForCrop(input, environmentFactors) - getCostsForCrop(input);
 
 // A function to calculate the total profit
-const getTotalProfit = ({ crops }) => crops.map(crop => getProfitForCrop(crop)).reduce((total, current) => total + current);
+const getTotalProfit = ({ crops }, environmentFactors) => crops.map(crop => getProfitForCrop(crop, environmentFactors)).reduce((total, current) => total + current);
 
 module.exports = {
     getYieldForPlant,
