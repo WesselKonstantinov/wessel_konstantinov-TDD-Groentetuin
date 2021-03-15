@@ -131,3 +131,64 @@ describe('getTotalProfit', () => {
         expect(getTotalProfit({ crops })).toBe(161);
     });
 });
+
+// Testing the getYieldForPlant function with environment factors
+describe('getYieldForPlant with environment factors', () => {
+    const corn = {
+        name: 'corn',
+        yield: 30,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+            },
+        },
+    };
+
+    test('Get yield for plant with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(45);
+    });
+
+    test('Get yield for plant with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
+    });
+
+    test('Get yield for plant with high wind factor', () => {
+        const environmentFactors = {
+            wind: 'high',
+        };
+
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(12);
+    });
+
+    test('Get yield for plant with medium wind factor', () => {
+        const environmentFactors = {
+            wind: 'medium',
+        };
+
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(21);
+    });
+
+    test('Get yield for plant with high sun and high wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'high',
+        };
+
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(18);
+    });
+});
