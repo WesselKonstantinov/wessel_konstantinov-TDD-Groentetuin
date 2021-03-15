@@ -600,8 +600,6 @@ describe('getTotalProfit with environment factors', () => {
         };
 
         expect(getTotalProfit({ crops }, environmentFactors)).toBe(39);
-        // mais: 12
-        // tomaat: 27
     });
 
     test('Calculate total profit with high sun and medium wind factor', () => {
