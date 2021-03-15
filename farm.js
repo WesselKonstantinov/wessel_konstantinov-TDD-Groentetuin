@@ -1,9 +1,20 @@
-/*
-    Functions for calculating the yield for one plant,
-    the yield for a crop and the total yield
-*/
-const getYieldForPlant = plant => plant.yield;
+// A function to calculate the yield for one plant depending on environment factors
+const getYieldForPlant = (plant, environmentFactors = {}) => {
+    let percentage = 100;
+    if ('sun' in environmentFactors && 'sun' in plant.factors) {
+        percentage *= (plant.factors.sun[environmentFactors.sun] + 100) / 100;
+    }
+    if ('wind' in environmentFactors && 'wind' in plant.factors) {
+        percentage *= (plant.factors.wind[environmentFactors.wind] + 100) / 100;
+    }
+
+    return plant.yield * (percentage / 100);
+};
+
+// A function to calculate the yield for a crop
 const getYieldForCrop = input => getYieldForPlant(input.crop) * input.numCrops;
+
+// A function to calculate the total yield 
 const getTotalYield = ({ crops }) => crops.map(crop => getYieldForCrop(crop)).reduce((total, current) => total + current);
 
 // A function to calculate the costs for a crop
