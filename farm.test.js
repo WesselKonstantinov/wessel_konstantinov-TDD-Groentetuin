@@ -357,7 +357,81 @@ describe('getTotalYield with environment factors', () => {
         };
 
         expect(getTotalYield({ crops }, environmentFactors)).toBe(6.2);
-        // mais: 3
-        // pompoen: 3.2
+    });
+});
+
+// Testing the getRevenueForCrop function with environment factors
+describe('getRevenueForCrop with environment factors', () => {
+    const corn = {
+        name: 'corn',
+        salePrice: 2,
+        yield: 3,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+            },
+        },
+    };
+
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
+
+    test('Calculate the revenue for a crop with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(90);
+    });
+
+    test('Calculate the revenue for a crop with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(30);
+    });
+
+    test('Calculate the revenue for a crop with medium wind factor', () => {
+        const environmentFactors = {
+            wind: 'medium',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(42);
+    });
+
+    test('Calculate the revenue for a crop with high wind factor', () => {
+        const environmentFactors = {
+            wind: 'high',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(24);
+    });
+
+    test('Calculate the revenue for a crop with low sun and medium wind factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+            wind: 'medium',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(21);
+    });
+
+    test('Calculate the revenue for a crop with high sun and medium wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'medium',
+        };
+
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(63);
     });
 });
