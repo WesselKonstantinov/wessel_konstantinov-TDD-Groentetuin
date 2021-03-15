@@ -4,14 +4,7 @@
 */
 const getYieldForPlant = plant => plant.yield;
 const getYieldForCrop = input => getYieldForPlant(input.crop) * input.numCrops;
-const getTotalYield = ({ crops }) => {
-    let totalYield = 0;
-    crops.forEach(crop => {
-        let cropYield = getYieldForCrop(crop);
-        totalYield += cropYield;
-    });
-    return totalYield;
-};
+const getTotalYield = ({ crops }) => crops.map(crop => getYieldForCrop(crop)).reduce((total, current) => total + current);
 
 // A function to calculate the costs for a crop
 const getCostsForCrop = input => input.crop.cost * input.numCrops;
@@ -23,14 +16,7 @@ const getRevenueForCrop = input => getYieldForCrop(input) * input.crop.salePrice
 const getProfitForCrop = input => getRevenueForCrop(input) - getCostsForCrop(input);
 
 // A function to calculate the total profit
-const getTotalProfit = ({ crops }) => {
-    let totalProfit = 0;
-    crops.forEach(crop => {
-        let cropProfit = getProfitForCrop(crop);
-        totalProfit += cropProfit;
-    });
-    return totalProfit;
-};
+const getTotalProfit = ({ crops }) => crops.map(crop => getProfitForCrop(crop)).reduce((total, current) => total + current);
 
 module.exports = {
     getYieldForPlant,
