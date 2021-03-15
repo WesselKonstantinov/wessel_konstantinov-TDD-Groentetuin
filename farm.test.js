@@ -26,10 +26,12 @@ describe('getYieldForCrop', () => {
             name: 'corn',
             yield: 3,
         };
+
         const input = {
             crop: corn,
             numCrops: 10,
         };
+
         expect(getYieldForCrop(input)).toBe(30);
     });
 });
@@ -40,14 +42,17 @@ describe('getTotalYield', () => {
             name: 'corn',
             yield: 3,
         };
+
         const pumpkin = {
             name: 'pumpkin',
             yield: 4,
         };
+
         const crops = [
             { crop: corn, numCrops: 5 },
             { crop: pumpkin, numCrops: 2 },
         ];
+
         expect(getTotalYield({ crops })).toBe(23);
     });
 
@@ -56,7 +61,9 @@ describe('getTotalYield', () => {
             name: 'corn',
             yield: 3,
         };
+
         const crops = [{ crop: corn, numCrops: 0 }];
+
         expect(getTotalYield({ crops })).toBe(0);
     });
 });
@@ -68,10 +75,12 @@ describe('getCostsForCrop', () => {
             name: 'corn',
             cost: 1,
         };
+
         const input = {
             crop: corn,
             numCrops: 10,
         };
+
         expect(getCostsForCrop(input)).toBe(10);
     });
 });
@@ -84,10 +93,12 @@ describe('getRevenueForCrop', () => {
             salePrice: 2,
             yield: 3,
         };
+
         const input = {
             crop: corn,
             numCrops: 10,
         };
+
         expect(getRevenueForCrop(input)).toBe(60);
     });
 });
@@ -101,10 +112,12 @@ describe('getProfitForCrop', () => {
             cost: 2,
             yield: 5,
         };
+
         const input = {
             crop: corn,
             numCrops: 10,
         };
+
         expect(getProfitForCrop(input)).toBe(180);
     });
 });
@@ -118,16 +131,19 @@ describe('getTotalProfit', () => {
             cost: 2,
             yield: 6,
         };
+
         const pumpkin = {
             name: 'pumpkin',
             salePrice: 5,
             cost: 3,
             yield: 4,
         };
+
         const crops = [
             { crop: corn, numCrops: 5 },
             { crop: pumpkin, numCrops: 3 },
         ];
+
         expect(getTotalProfit({ crops })).toBe(161);
     });
 });
@@ -510,5 +526,90 @@ describe('getProfitForCrop with environment factors', () => {
         };
 
         expect(getProfitForCrop(input, environmentFactors)).toBe(2);
+    });
+});
+
+// Testing the getTotalProfit function with environment factors
+describe('getTotalProfit with environment factors', () => {
+    const corn = {
+        name: 'corn',
+        yield: 5,
+        salePrice: 4,
+        cost: 2,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+            },
+        },
+    }
+
+    const tomato = {
+        name: 'tomato',
+        yield: 3,
+        salePrice: 5,
+        cost: 3,
+        factors: {
+            sun: {
+                low: -20,
+                medium: 0,
+                high: 40,
+            },
+        },
+    };
+
+    const crops = [
+        { crop: corn, numCrops: 6 },
+        { crop: tomato, numCrops: 3 },
+    ];
+
+    test('Calculate total profit with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getTotalProfit({ crops }, environmentFactors)).toBe(222);
+    });
+
+    test('Calculate total profit with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getTotalProfit({ crops }, environmentFactors)).toBe(75);
+    });
+
+    test('Calculate total profit with medium wind factor', () => {
+        const environmentFactors = {
+            wind: 'medium',
+        };
+
+        expect(getTotalProfit({ crops }, environmentFactors)).toBe(108);
+    });
+
+    test('Calculate total profit with low sun and high wind factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+            wind: 'high',
+        };
+
+        expect(getTotalProfit({ crops }, environmentFactors)).toBe(39);
+        // mais: 12
+        // tomaat: 27
+    });
+
+    test('Calculate total profit with high sun and medium wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'medium',
+        };
+
+        expect(getTotalProfit({ crops }, environmentFactors)).toBe(168);
     });
 });
