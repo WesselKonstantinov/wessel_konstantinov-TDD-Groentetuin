@@ -267,3 +267,97 @@ describe('getYieldForCrop with environment factors', () => {
         expect(getYieldForCrop(input, environmentFactors)).toBe(260);
     });
 });
+
+// Testing the getTotalYield function with environment factors
+describe('getTotalYield with environment factors', () => {
+    const corn = {
+        name: 'corn',
+        yield: 3,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+            },
+        },
+    };
+
+    const pumpkin = {
+        name: 'pumpkin',
+        yield: 4,
+        factors: {
+            sun: {
+                low: -20,
+                medium: 0,
+                high: 30,
+            },
+            wind: {
+                low: 0,
+                medium: -30,
+                high: -50,
+            },
+        },
+    };
+
+    const crops = [
+        { crop: corn, numCrops: 5 },
+        { crop: pumpkin, numCrops: 2 },
+    ];
+
+    test('Calculate total yield with high sun factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(32.9);
+    });
+
+    test('Calculate total yield with low sun factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(13.9);
+    });
+
+    test('Calculate total yield with high wind factor', () => {
+        const environmentFactors = {
+            wind: 'high',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(10);
+    });
+
+    test('Calculate total yield with low wind factor', () => {
+        const environmentFactors = {
+            wind: 'low',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(23);
+    });
+
+    test('Calculate total yield with high sun and low wind factor', () => {
+        const environmentFactors = {
+            sun: 'high',
+            wind: 'low',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(32.9);
+    });
+
+    test('Calculate total yield with low sun and high wind factor', () => {
+        const environmentFactors = {
+            sun: 'low',
+            wind: 'high',
+        };
+
+        expect(getTotalYield({ crops }, environmentFactors)).toBe(6.2);
+        // mais: 3
+        // pompoen: 3.2
+    });
+});
